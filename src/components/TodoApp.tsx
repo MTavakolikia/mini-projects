@@ -5,10 +5,12 @@ type Task = {
     text: string;
     completed: boolean;
 };
+type Filter = "all" | "completed" | "incomplete";
 
 export default function TodoApp() {
     const [task, setTask] = useState<string>("");
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [filter, setFilter] = useState<Filter>("all");
 
     const handleAddTask = () => {
         if (task.trim() === "") return;
@@ -20,6 +22,18 @@ export default function TodoApp() {
         setTasks([newTask, ...tasks]);
         setTask("");
     };
+
+    const getFilteredTasks = () => {
+        switch (filter) {
+            case "completed":
+                return tasks.filter((t) => t.completed);
+            case "incomplete":
+                return tasks.filter((t) => !t.completed);
+            default:
+                return tasks;
+        }
+    };
+
 
     const handleToggleComplete = (id: number) => {
         setTasks((prev) =>
@@ -54,8 +68,28 @@ export default function TodoApp() {
                 </button>
             </div>
 
+            <div className="flex justify-center gap-2 mb-4">
+                {(["all", "completed", "incomplete"] as Filter[]).map((f) => (
+                    <button
+                        key={f}
+                        onClick={() => setFilter(f)}
+                        className={`px-3 py-1 rounded-full text-sm border transition ${filter === f
+                            ? "bg-blue-500 text-white"
+                            : "bg-white text-gray-700 border-gray-300"
+                            }`}
+                    >
+                        {f === "all"
+                            ? "همه"
+                            : f === "completed"
+                                ? "انجام‌شده"
+                                : "انجام‌نشده"}
+                    </button>
+                ))}
+            </div>
+
+
             <ul className="space-y-2">
-                {tasks.map((t) => (
+                {getFilteredTasks().map((t) => (
                     <li
                         key={t.id}
                         className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-xl"
