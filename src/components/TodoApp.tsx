@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Task = {
     id: number;
@@ -8,19 +8,28 @@ type Task = {
 type Filter = "all" | "completed" | "incomplete";
 
 export default function TodoApp() {
-    const [task, setTask] = useState<string>("");
+    const [taskInput, setTaskInput] = useState<string>("");
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Filter>("all");
 
+    useEffect(() => {
+        const storedTasks = localStorage.getItem("tasks");
+        if (storedTasks) {
+            setTasks(JSON.parse(storedTasks));
+        }
+    }, []);
+
     const handleAddTask = () => {
-        if (task.trim() === "") return;
+        if (taskInput.trim() === "") return;
         const newTask: Task = {
             id: Date.now(),
-            text: task,
+            text: taskInput,
             completed: false,
         };
-        setTasks([newTask, ...tasks]);
-        setTask("");
+        const allTasks = [newTask, ...tasks]
+        setTasks(allTasks);
+        localStorage.setItem("tasks", JSON.stringify(allTasks));
+        setTaskInput("")
     };
 
     const getFilteredTasks = () => {
@@ -55,8 +64,8 @@ export default function TodoApp() {
             <div className="flex gap-2 mb-4">
                 <input
                     type="text"
-                    value={task}
-                    onChange={(e) => setTask(e.target.value)}
+                    value={taskInput}
+                    onChange={(e) => setTaskInput(e.target.value)}
                     placeholder="کار جدید..."
                     className="flex-1 px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
