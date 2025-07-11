@@ -11,6 +11,9 @@ export default function TodoApp() {
     const [taskInput, setTaskInput] = useState<string>("");
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Filter>("all");
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editingText, setEditingText] = useState<string>("");
+
 
     useEffect(() => {
         const storedTasks = localStorage.getItem("tasks");
@@ -31,6 +34,30 @@ export default function TodoApp() {
         localStorage.setItem("tasks", JSON.stringify(allTasks));
         setTaskInput("")
     };
+
+    const handleStartEdit = (task: Task) => {
+        setEditingId(task.id);
+        setEditingText(task.text);
+    };
+
+    const handleEditSave = (id: number) => {
+        if (editingText.trim() === "") {
+            setEditingId(null);
+            return;
+        }
+
+        setTasks((prev) =>
+            prev.map((task) =>
+                task.id === id ? { ...task, text: editingText } : task
+            )
+        );
+        setEditingId(null);
+    };
+
+    const handleCancelEdit = () => {
+        setEditingId(null);
+    };
+
 
     const getFilteredTasks = () => {
         switch (filter) {
@@ -110,19 +137,46 @@ export default function TodoApp() {
                                 onChange={() => handleToggleComplete(t.id)}
                                 className="w-4 h-4"
                             />
-                            <span
-                                className={`${t.completed ? "line-through text-gray-400" : ""
-                                    } transition-all`}
-                            >
-                                {t.text}
-                            </span>
+                            {editingId === t.id ? (
+                                <input
+                                    value={editingText}
+                                    onChange={(e) => setEditingText(e.target.value)}
+                                    onBlur={() => handleEditSave(t.id)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") handleEditSave(t.id);
+                                        if (e.key === "Escape") handleCancelEdit();
+                                    }}
+                                    autoFocus
+                                    className="px-2 py-1 rounded border border-gray-300 text-sm"
+                                />
+                            ) : (
+                                <span
+                                    className={`${t.completed ? "line-through text-gray-400" : ""
+                                        } cursor-pointer transition-all`}
+                                    onClick={() => handleStartEdit(t)}
+                                >
+                                    {t.text}
+                                </span>
+                            )}
+
                         </div>
-                        <button
-                            onClick={() => handleDeleteTask(t.id)}
-                            className="text-red-500 hover:text-red-700 transition"
-                        >
-                            ❌
-                        </button>
+                        <div>
+                            <button
+                                onClick={() => handleStartEdit(t)}
+                                className="text-slate-500 hover:text-slate-700 transition"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                onClick={() => handleDeleteTask(t.id)}
+                                className="text-red-500 hover:text-red-700 transition"
+                            >
+                                ❌
+                            </button>
+                        </div>
+
+
                     </li>
                 ))}
             </ul>
