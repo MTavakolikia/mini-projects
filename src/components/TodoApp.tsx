@@ -15,6 +15,9 @@ export default function TodoApp() {
     const [editingText, setEditingText] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState<string>("");
 
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter((t) => t.completed).length;
+    const progressPercent = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
 
     useEffect(() => {
@@ -147,6 +150,9 @@ export default function TodoApp() {
             </div>
 
 
+            {totalTasks === 0 && (
+                <p className="text-sm text-gray-500 italic">هیچ تسکی وجود ندارد</p>
+            )}
 
 
             <ul className="space-y-2">
@@ -205,6 +211,19 @@ export default function TodoApp() {
                     </li>
                 ))}
             </ul>
+            <div className="mb-4 space-y-2">
+                <p className="text-sm text-gray-600">
+                    ✅ {completedTasks} از {totalTasks} تسک انجام شده
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                    <div
+                        className="bg-green-500 h-3 transition-all duration-300"
+                        style={{ width: `${progressPercent}%` }}
+                    />
+                </div>
+                <p className="text-xs text-right text-gray-500">{progressPercent}% پیشرفت</p>
+            </div>
+
 
         </div>
     );
