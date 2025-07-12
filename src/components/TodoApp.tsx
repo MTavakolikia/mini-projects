@@ -13,6 +13,8 @@ export default function TodoApp() {
     const [filter, setFilter] = useState<Filter>("all");
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editingText, setEditingText] = useState<string>("");
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
 
 
     useEffect(() => {
@@ -60,15 +62,23 @@ export default function TodoApp() {
 
 
     const getFilteredTasks = () => {
-        switch (filter) {
-            case "completed":
-                return tasks.filter((t) => t.completed);
-            case "incomplete":
-                return tasks.filter((t) => !t.completed);
-            default:
-                return tasks;
+        let filtered = tasks;
+
+        if (filter === "completed") {
+            filtered = filtered.filter((t) => t.completed);
+        } else if (filter === "incomplete") {
+            filtered = filtered.filter((t) => !t.completed);
         }
+
+        if (searchQuery.trim() !== "") {
+            filtered = filtered.filter((t) =>
+                t.text.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        return filtered;
     };
+
 
 
     const handleToggleComplete = (id: number) => {
@@ -82,6 +92,8 @@ export default function TodoApp() {
     const handleDeleteTask = (id: number) => {
         setTasks((prev) => prev.filter((task) => task.id !== id));
     };
+
+
 
 
     return (
@@ -104,24 +116,37 @@ export default function TodoApp() {
                 </button>
             </div>
 
-            <div className="flex justify-center gap-2 mb-4">
-                {(["all", "completed", "incomplete"] as Filter[]).map((f) => (
-                    <button
-                        key={f}
-                        onClick={() => setFilter(f)}
-                        className={`px-3 py-1 rounded-full text-sm border transition ${filter === f
-                            ? "bg-blue-500 text-white"
-                            : "bg-white text-gray-700 border-gray-300"
-                            }`}
-                    >
-                        {f === "all"
-                            ? "همه"
-                            : f === "completed"
-                                ? "انجام‌شده"
-                                : "انجام‌نشده"}
-                    </button>
-                ))}
+            <div className="flex items-center justify-between">
+                <input
+                    type="text"
+                    placeholder="جستجوی تسک..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full md:w-1/2 px-3 py-2 mb-4 border border-gray-300 rounded shadow-sm text-sm"
+                />
+
+
+                <div className="flex justify-center gap-2 mb-4">
+                    {(["all", "completed", "incomplete"] as Filter[]).map((f) => (
+                        <button
+                            key={f}
+                            onClick={() => setFilter(f)}
+                            className={`px-3 py-1 rounded-full text-sm border transition ${filter === f
+                                ? "bg-blue-500 text-white"
+                                : "bg-white text-gray-700 border-gray-300"
+                                }`}
+                        >
+                            {f === "all"
+                                ? "همه"
+                                : f === "completed"
+                                    ? "انجام‌شده"
+                                    : "انجام‌نشده"}
+                        </button>
+                    ))}
+                </div>
             </div>
+
+
 
 
             <ul className="space-y-2">
