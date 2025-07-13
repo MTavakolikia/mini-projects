@@ -1,4 +1,15 @@
 {
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@features/*": ["features/*"],
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@lib/*": ["lib/*"],
+      "@layout/*": ["layout/*"]
+    }
+  },
+
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
