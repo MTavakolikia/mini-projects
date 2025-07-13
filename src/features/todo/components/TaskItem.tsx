@@ -1,0 +1,62 @@
+import type { Task } from "../model/types";
+
+interface Props {
+    task: Task;
+    onToggle: (id: number) => void;
+    onDelete: (id: number) => void;
+    onEditStart: (task: Task) => void;
+    onEditSave: (id: number, newText: string) => void;
+    editingId: number | null;
+    editingText: string;
+    setEditingText: (text: string) => void;
+    onCancelEdit: () => void;
+}
+
+export const TaskItem = ({
+    task,
+    onToggle,
+    onDelete,
+    onEditStart,
+    onEditSave,
+    editingId,
+    editingText,
+    setEditingText,
+    onCancelEdit,
+}: Props) => {
+    return (
+        <li className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-xl">
+            <div className="flex items-center gap-2">
+                <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => onToggle(task.id)}
+                    className="w-4 h-4"
+                />
+                {editingId === task.id ? (
+                    <input
+                        value={editingText}
+                        onChange={(e) => setEditingText(e.target.value)}
+                        onBlur={() => onEditSave(task.id, editingText)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") onEditSave(task.id, editingText);
+                            if (e.key === "Escape") onCancelEdit();
+                        }}
+                        autoFocus
+                        className="px-2 py-1 rounded border border-gray-300 text-sm"
+                    />
+                ) : (
+                    <span
+                        className={`${task.completed ? "line-through text-gray-400" : ""} cursor-pointer`}
+                        onClick={() => onEditStart(task)}
+                    >
+                        {task.text}
+                    </span>
+                )}
+            </div>
+            <div className="flex gap-2">
+                <button onClick={() => onEditStart(task)} className="text-slate-500 hover:text-slate-700">✏️</button>
+                <button onClick={() => onDelete(task.id)} className="text-red-500 hover:text-red-700">❌</button>
+            </div>
+        </li>
+    );
+};

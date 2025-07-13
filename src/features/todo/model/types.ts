@@ -1,6 +1,7 @@
-export interface Task {
+export type Task = {
     id: number;
     text: string;
     completed: boolean;
-    dueDate?: string;
-}
+};
+
+export type Filter = "all" | "completed" | "incomplete";
