@@ -87,7 +87,7 @@ export default function TodoApp() {
 
             <AddTaskForm onAdd={handleAddTask} />
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-2 mb-4">
+            <div className="flex  md:flex-row items-center justify-between gap-2 mb-4">
                 <input
                     type="text"
                     placeholder="جستجوی تسک..."

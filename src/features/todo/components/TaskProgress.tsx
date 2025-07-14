@@ -7,7 +7,7 @@ export const TaskProgress = ({ completed, total }: Props) => {
     const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
     return (
-        <div className="space-y-2">
+        <div className="mt-3 py-2">
             <p className="text-sm text-gray-600">
                 ✅ {completed} از {total} تسک انجام شده
             </p>

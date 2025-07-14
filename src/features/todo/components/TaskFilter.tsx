@@ -10,7 +10,7 @@ export const TaskFilter = ({ filter, onChange }: Props) => {
         <select
             value={filter}
             onChange={(e) => onChange(e.target.value as Filter)}
-            className="px-3 py-2 border border-gray-300 rounded text-sm mb-4"
+            className="px-3 py-2 border border-gray-300 rounded text-sm"
         >
             <option value="all">همه</option>
             <option value="completed">انجام‌شده</option>
