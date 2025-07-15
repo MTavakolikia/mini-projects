@@ -45,12 +45,21 @@ export const TaskItem = ({
                         className="px-2 py-1 rounded border border-gray-300 text-sm"
                     />
                 ) : (
-                    <span
-                        className={`${task.completed ? "line-through text-gray-400" : ""} cursor-pointer`}
-                        onClick={() => onEditStart(task)}
-                    >
-                        {task.text}
-                    </span>
+                    <div className="flex gap-2 items-center">
+                        <span
+                            className={`${task.completed ? "line-through text-gray-400" : ""} cursor-pointer`}
+                            onClick={() => onEditStart(task)}
+                        >
+                            {task.text}
+                        </span>
+
+                        {task.category && (
+                            <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">
+                                {task.category}
+                            </span>
+                        )}
+                    </div>
+
                 )}
             </div>
             <div className="flex gap-2">

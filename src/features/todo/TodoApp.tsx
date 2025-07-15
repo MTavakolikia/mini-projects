@@ -21,14 +21,17 @@ export default function TodoApp() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]);
 
-    const handleAddTask = (text: string) => {
+    const handleAddTask = (text: string, category: string) => {
         const newTask: Task = {
             id: Date.now(),
             text,
             completed: false,
+            category,
         };
         setTasks((prev) => [newTask, ...prev]);
     };
+
+
 
     const handleToggleComplete = (id: number) => {
         setTasks((prev) =>
