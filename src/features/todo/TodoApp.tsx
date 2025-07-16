@@ -11,6 +11,7 @@ export default function TodoApp() {
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editingText, setEditingText] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
     useEffect(() => {
         const storedTasks = localStorage.getItem("tasks");
@@ -72,6 +73,10 @@ export default function TodoApp() {
             filtered = filtered.filter((t) => !t.completed);
         }
 
+        if (categoryFilter !== "all") {
+            filtered = filtered.filter((t) => t.category === categoryFilter);
+        }
+
         if (searchQuery.trim() !== "") {
             filtered = filtered.filter((t) =>
                 t.text.toLowerCase().includes(searchQuery.toLowerCase())
@@ -80,6 +85,7 @@ export default function TodoApp() {
 
         return filtered;
     };
+
 
     const total = tasks.length;
     const completed = tasks.filter((t) => t.completed).length;
@@ -98,7 +104,17 @@ export default function TodoApp() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded shadow-sm text-sm"
                 />
-
+                <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded text-sm"
+                >
+                    <option value="all">📂 همه دسته‌ها</option>
+                    <option value="عمومی">🟡 عمومی</option>
+                    <option value="کار">🔵 کار</option>
+                    <option value="شخصی">🟢 شخصی</option>
+                    <option value="یادگیری">🟣 یادگیری</option>
+                </select>
                 <TaskFilter filter={filter} onChange={setFilter} />
             </div>
 
