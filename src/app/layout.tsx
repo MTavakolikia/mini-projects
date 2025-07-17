@@ -1,6 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
 import Logo from "/logo.webp"
+import { useAppContext } from "../context/AppContext";
+
 export default function AppLayout() {
+    const { toggleTheme, theme, locale, toggleLocale } = useAppContext();
     return (
         <div className="min-h-screen bg-gray-100">
             <header className="bg-white shadow p-4 flex justify-between items-center">
@@ -12,6 +15,15 @@ export default function AppLayout() {
                     <Link to="/" className="hover:text-blue-500" >خانه </Link>
                     <Link to="/todo" className="hover:text-blue-500">لیست کارها </Link>
                 </nav>
+                <div>
+                    <button onClick={toggleTheme} className="hover:text-blue-500">
+                        {theme === "dark" ? "☀️ روشن" : "🌙 تاریک"}
+                    </button>
+                    <button onClick={toggleLocale} className="hover:text-blue-500">
+                        {locale === "fa" ? "EN" : "FA"}
+                    </button>
+                </div>
+
             </header>
 
             <main className="p-4 flex justify-center items-center">

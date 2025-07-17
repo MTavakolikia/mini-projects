@@ -9,3 +9,11 @@ body {
 .dark body {
     @apply bg-gray-900 text-white;
 }
+
+html {
+    direction: ltr;
+}
+
+html[lang="fa"] {
+    direction: rtl;
+}

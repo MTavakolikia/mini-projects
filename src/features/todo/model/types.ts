@@ -3,6 +3,7 @@ export type Task = {
     text: string;
     completed: boolean;
     category?: string;
+    dueDate?: string;
 };
 
 export type Filter = "all" | "completed" | "incomplete";
