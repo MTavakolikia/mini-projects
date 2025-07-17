@@ -1,5 +1,6 @@
 import type { Task } from "../model/types";
 
+
 interface Props {
     task: Task;
     onToggle: (id: number) => void;
@@ -53,9 +54,15 @@ export const TaskItem = ({
                             {task.text}
                         </span>
 
+
                         {task.category && (
                             <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">
                                 {task.category}
+                            </span>
+                        )}
+                        {task?.dueDate && (
+                            <span className="text-xs text-gray-600">
+                                سررسید: {task.dueDate}
                             </span>
                         )}
                     </div>
