@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useAppContext } from "../../../context/AppContext";
 import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import gregorian from "react-date-object/calendars/gregorian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import gregorian_en from "react-date-object/locales/gregorian_en";
-import type { DateObject } from "react-multi-date-picker";
+import { useAppContext } from "../../../context/AppContext";
+import { getCalendarConfig } from "../../../utils/calendarConfig";
 
+import type { DateObject } from "react-multi-date-picker";
 interface Props {
     onAdd: (text: string, category: string, dueDate: string) => void;
 }
@@ -18,9 +15,8 @@ export const AddTaskForm = ({ onAdd }: Props) => {
     const [taskDate, setTaskDate] = useState<DateObject | null>(null);
 
     const { locale } = useAppContext();
+    const { calendar, dateLocale } = getCalendarConfig(locale);
 
-    const calendar = locale === "fa" ? persian : gregorian;
-    const dateLocale = locale === "fa" ? persian_fa : gregorian_en;
 
 
     const handleAdd = () => {
@@ -30,8 +26,6 @@ export const AddTaskForm = ({ onAdd }: Props) => {
         setInput("");
         setCategory("عمومی");
     };
-
-
 
 
     return (
