@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import Logo from "/logo.webp"
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../context/useAppContext";
 
 export default function AppLayout() {
     const { toggleTheme, theme, locale, toggleLocale } = useAppContext();

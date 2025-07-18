@@ -1,9 +1,9 @@
 import { useState } from "react";
 import DatePicker from "react-multi-date-picker";
-import { useAppContext } from "../../../context/AppContext";
 import { getCalendarConfig } from "../../../utils/calendarConfig";
 
 import type { DateObject } from "react-multi-date-picker";
+import { useAppContext } from "../../../context/useAppContext";
 interface Props {
     onAdd: (text: string, category: string, dueDate: string) => void;
 }

@@ -92,7 +92,7 @@ export default function TodoApp() {
     const completed = tasks.filter((t) => t.completed).length;
 
     return (
-        <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
+        <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-2xl">
             <h1 className="text-2xl font-bold mb-4 text-center">📝 لیست کارها</h1>
 
             <AddTaskForm onAdd={handleAddTask} />
