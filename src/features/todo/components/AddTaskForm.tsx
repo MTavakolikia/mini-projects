@@ -1,69 +1,90 @@
-import { useState } from "react";
-import DatePicker from "react-multi-date-picker";
-import { getCalendarConfig } from "../../../utils/calendarConfig";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Flex, Button } from "@chakra-ui/react";
+import { FormInput } from "@/components/form/FormInput";
+import { FormSelect } from "@/components/form/FormSelect";
+import { FormDatePicker } from "@/components/form/FormDatePicker";
+import z from "zod/v3";
 
-import type { DateObject } from "react-multi-date-picker";
-import { useAppContext } from "../../../context/useAppContext";
+const formSchema = z.object({
+    TextField: z.string().min(1, { message: "عنوان کار الزامی است" }),
+    Category: z.enum(["عمومی", "کار", "شخصی", "یادگیری"], {
+        errorMap: () => ({
+            message: "لطفا یک دسته‌بندی معتبر انتخاب کنید",
+        }),
+    }),
+    DueDate: z.string().optional(),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
 interface Props {
     onAdd: (text: string, category: string, dueDate: string) => void;
 }
 
+const categoryOptions = [
+    { label: "🟡 عمومی", value: "عمومی" },
+    { label: "🔵 کار", value: "کار" },
+    { label: "🟢 شخصی", value: "شخصی" },
+    { label: "🟣 یادگیری", value: "یادگیری" },
+];
 
 export const AddTaskForm = ({ onAdd }: Props) => {
-    const [input, setInput] = useState("");
-    const [category, setCategory] = useState("عمومی");
-    const [taskDate, setTaskDate] = useState<DateObject | null>(null);
-
-    const { locale } = useAppContext();
-    const { calendar, dateLocale } = getCalendarConfig(locale);
 
 
+    const { control, handleSubmit, reset } = useForm<FormData>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            TextField: "",
+            Category: "عمومی",
+            DueDate: "",
+        },
+    });
 
-    const handleAdd = () => {
-        if (input.trim() === "") return;
-        const dueDate = taskDate?.format("YYYY/MM/DD") ?? "";
-        onAdd(input, category, dueDate);
-        setInput("");
-        setCategory("عمومی");
+    const onSubmit = (data: FormData) => {
+        const dueDate = data.DueDate ?? "";
+        onAdd(data.TextField, data.Category, dueDate);
+        reset();
     };
 
-
     return (
-        <div className="flex flex-col md:flex-row gap-2 mb-4">
-            <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="کار جدید..."
-                className="flex-1 px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="px-3 py-2 border rounded-xl"
-            >
-                <option value="عمومی">🟡 عمومی</option>
-                <option value="کار">🔵 کار</option>
-                <option value="شخصی">🟢 شخصی</option>
-                <option value="یادگیری">🟣 یادگیری</option>
-            </select>
-            <DatePicker
-                value={taskDate}
-                onChange={setTaskDate}
-                calendar={calendar}
-                locale={dateLocale}
-                inputClass="w-full px-3 py-2 border rounded-xl text-sm"
-                placeholder="تاریخ سررسید"
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Flex direction={{ base: "column", md: "row" }} gap={4} mb={6}>
 
+                <FormInput
+                    name="TextField"
+                    control={control}
+                    label="عنوان کار"
+                    placeholder="کار جدید..."
+                />
 
-            <button
-                onClick={handleAdd}
-                className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition"
-            >
-                افزودن
-            </button>
-        </div>
+                <FormSelect
+                    name="Category"
+                    control={control}
+                    label="دسته‌بندی"
+                    placeholder="دسته‌بندی را انتخاب کنید"
+                    options={categoryOptions}
+                />
 
+                <FormDatePicker
+                    name="DueDate"
+                    control={control}
+                    label="تاریخ سررسید"
+                    placeholder="تاریخ سررسید"
+                />
+
+                <Button
+                    type="submit"
+                    bg="blue.500"
+                    color="white"
+                    px={4}
+                    py={2}
+                    rounded="xl"
+                    _hover={{ bg: "blue.600" }}
+                >
+                    افزودن
+                </Button>
+            </Flex>
+        </form>
     );
 };

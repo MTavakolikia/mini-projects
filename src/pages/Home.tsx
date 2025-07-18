@@ -1,3 +1,4 @@
+import { Button, Group, Input } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -11,6 +12,12 @@ export default function Home() {
             >
                 برو به لیست کارها 🚀
             </Link>
+            <Group attached w="full" maxW="sm">
+                <Input flex="1" placeholder="Enter your email" />
+                <Button bg="bg.subtle" variant="outline">
+                    Submit
+                </Button>
+            </Group>
         </div>
     );
 }
