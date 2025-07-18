@@ -1,8 +1,9 @@
 
-import { Link, } from "react-router-dom";
+import LangToggler from "./LangToggler"
+import { Navigation } from "./Navbar"
+import ThemeToggler from "./ThemeToggler"
 import Logo from "/logo.webp"
-import ThemeToggler from "./ThemeToggler";
-import LangToggler from "./LangToggler";
+
 
 const Header = () => {
 
@@ -12,10 +13,8 @@ const Header = () => {
                 <img src={Logo} alt="Mini app logo" width={40} />
                 <h1 className="text-xl font-bold text-cyan-600">Mini Apps</h1>
             </div>
-            <nav className="space-x-4 text-sm">
-                <Link to="/" className="hover:text-blue-500" >خانه </Link>
-                <Link to="/todo" className="hover:text-blue-500">لیست کارها </Link>
-            </nav>
+
+            <Navigation />
             <div className="flex gap-2">
                 <ThemeToggler />
                 <LangToggler />
