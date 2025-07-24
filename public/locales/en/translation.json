@@ -1,0 +1,42 @@
+{
+  "task": {
+    "title": "Task Title",
+    "placeholder": "e.g. Buy bread",
+    "category": "Category",
+    "dueDate": "Due Date",
+    "add": "Add",
+    "submit": "Submit",
+    "completed": "Completed",
+    "incomplete": "Incomplete",
+    "all": "All",
+    "searchPlaceholder": "Search tasks...",
+    "noTasks": "No tasks available",
+    "progress": "Progress",
+    "of": "of",
+    "done": "tasks completed",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "category": {
+    "general": "🟡 General",
+    "personal": "🟢 Personal",
+    "work": "🔵 Work",
+    "learning": "🟣 Learning"
+  },
+  "form": {
+    "required": "This field is required",
+    "minText": "Please enter at least 2 characters"
+  },
+  "theme": {
+    "dark": "Dark Mode",
+    "light": "Light Mode"
+  },
+  "locale": {
+    "switch": "Change Language",
+    "fa": "Farsi",
+    "en": "English"
+  },
+  "calendar": {
+    "placeholder": "Date"
+  }
+}

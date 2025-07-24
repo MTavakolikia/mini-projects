@@ -1,4 +1,7 @@
+import { Checkbox, IconButton } from "@chakra-ui/react";
 import type { Task } from "../model/types";
+import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { Tooltip } from "@/components/ui/tooltip";
 
 
 interface Props {
@@ -27,12 +30,14 @@ export const TaskItem = ({
     return (
         <li className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-xl">
             <div className="flex items-center gap-2">
-                <input
-                    type="checkbox"
+                <Checkbox.Root
                     checked={task.completed}
                     onChange={() => onToggle(task.id)}
-                    className="w-4 h-4"
-                />
+                    variant={"subtle"}
+                >
+                    <Checkbox.HiddenInput />
+                    <Checkbox.Control />
+                </Checkbox.Root>
                 {editingId === task.id ? (
                     <input
                         value={editingText}
@@ -70,8 +75,34 @@ export const TaskItem = ({
                 )}
             </div>
             <div className="flex gap-2">
-                <button onClick={() => onEditStart(task)} className="text-slate-500 hover:text-slate-700">✏️</button>
-                <button onClick={() => onDelete(task.id)} className="text-red-500 hover:text-red-700">❌</button>
+                <Tooltip content="ویرایش">
+                    <IconButton
+                        aria-label="Edit Task"
+                        variant="outline"
+                        size={"sm"}
+                        color={"yellow.500"}
+                        border={"solid 1px"}
+                        _hover={{ color: "yellow.600" }}
+                        onClick={() => onEditStart(task)}
+                        rounded="full"
+                    >
+                        <FaPencilAlt />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip content="حذف">
+                    <IconButton
+                        aria-label="Delete Task"
+                        variant="outline"
+                        border={"solid 1px"}
+                        size={"sm"} onClick={() => onDelete(task.id)}
+                        color={"red.500"}
+                        _hover={{ color: "red.600" }}
+                        rounded="full"
+
+                    >
+                        <FaRegTrashAlt />
+                    </IconButton>
+                </Tooltip>
             </div>
         </li>
     );

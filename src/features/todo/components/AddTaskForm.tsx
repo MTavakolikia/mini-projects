@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Flex, Button } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 import { FormInput } from "@/components/form/FormInput";
 import { FormSelect } from "@/components/form/FormSelect";
 import { FormDatePicker } from "@/components/form/FormDatePicker";
@@ -49,8 +49,7 @@ export const AddTaskForm = ({ onAdd }: Props) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Flex direction={{ base: "column", md: "row" }} gap={4} mb={6}>
-
+            <HStack marginBottom={"5"}>
                 <FormInput
                     name="TextField"
                     control={control}
@@ -84,7 +83,9 @@ export const AddTaskForm = ({ onAdd }: Props) => {
                 >
                     افزودن
                 </Button>
-            </Flex>
+            </HStack>
+
+
         </form>
     );
 };

@@ -1,4 +1,7 @@
-import { createContext } from "react";
-import type { AppContextProps } from "./AppContext.types";
+import { createContext } from 'react';
+import type { AppContextType } from './AppContext.types';
 
-export const AppContext = createContext<AppContextProps | null>(null);
+export const AppContext = createContext<AppContextType>({
+    locale: 'fa',
+    toggleLocale: () => { }
+});

@@ -1,9 +1,6 @@
-export type Theme = "light" | "dark";
-export type Locale = "fa" | "en";
+export type Locale = 'en' | 'fa';
 
-export interface AppContextProps {
-    theme: Theme;
-    toggleTheme: () => void;
+export interface AppContextType {
     locale: Locale;
     toggleLocale: () => void;
 }

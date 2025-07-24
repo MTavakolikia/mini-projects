@@ -1,16 +1,12 @@
-import { useAppContext } from "@/context/useAppContext";
-import { IconButton } from "@chakra-ui/react";
+import { useContext } from 'react';
+import { AppContext } from '@/context/AppContext';
 
-const LangToggler = () => {
-    const { locale, toggleLocale } = useAppContext();
+export default function LanguageSwitcher() {
+    const { locale, toggleLocale } = useContext(AppContext);
 
     return (
-        <IconButton
-            onClick={toggleLocale}
-        >
-            {locale === "fa" ? "EN" : "FA"}
-        </IconButton>
-    )
+        <button onClick={toggleLocale}>
+            {locale === 'en' ? 'فارسی' : 'English'}
+        </button>
+    );
 }
-
-export default LangToggler

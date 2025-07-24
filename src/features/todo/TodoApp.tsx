@@ -4,6 +4,7 @@ import { TaskFilter } from "./components/TaskFilter";
 import { TaskList } from "./components/TaskList";
 import { TaskProgress } from "./components/TaskProgress";
 import type { Filter, Task } from "./model/types";
+import { useTranslation } from "react-i18next";
 
 export default function TodoApp() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -12,15 +13,15 @@ export default function TodoApp() {
     const [editingText, setEditingText] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [categoryFilter, setCategoryFilter] = useState<string>("all");
-
+    const { t } = useTranslation();
     useEffect(() => {
         const storedTasks = localStorage.getItem("tasks");
         if (storedTasks) setTasks(JSON.parse(storedTasks));
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }, [tasks]);
+    const handlePersistTasks = (newTasks: Task[]) => {
+        localStorage.setItem("tasks", JSON.stringify(newTasks));
+    }
 
     const handleAddTask = (text: string, category: string, dueDate: string) => {
         const newTask: Task = {
@@ -30,15 +31,15 @@ export default function TodoApp() {
             category,
             dueDate
         };
-        setTasks((prev) => [newTask, ...prev]);
+        const newTaskList = [newTask, ...tasks]
+        setTasks(newTaskList);
+        handlePersistTasks(newTaskList);
     };
 
-
-
     const handleToggleComplete = (id: number) => {
-        setTasks((prev) =>
-            prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
-        );
+        const taskChanges = tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+        setTasks(taskChanges)
+        handlePersistTasks(taskChanges)
     };
 
     const handleDeleteTask = (id: number) => {
@@ -134,7 +135,7 @@ export default function TodoApp() {
                     onCancelEdit={handleCancelEdit}
                 />
             )}
-
+            <h1>{t('home.title')}</h1>
             <TaskProgress completed={completed} total={total} />
         </div>
     );
