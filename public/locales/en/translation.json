@@ -1,42 +1,47 @@
 {
-  "task": {
-    "title": "Task Title",
-    "placeholder": "e.g. Buy bread",
+  "home": {
+    "title": "Home"
+  },
+  "todo": {
+    "title": "Task List",
+    "addTask": "Add Task",
+    "taskTitle": "Task Title",
+    "taskPlaceholder": "New task...",
     "category": "Category",
+    "selectCategory": "Select category",
     "dueDate": "Due Date",
-    "add": "Add",
-    "submit": "Submit",
+    "search": "Search tasks...",
+    "noTasks": "No tasks available",
+    "allCategories": "📂 All categories",
+    "edit": "Edit",
+    "delete": "Delete",
     "completed": "Completed",
     "incomplete": "Incomplete",
     "all": "All",
-    "searchPlaceholder": "Search tasks...",
-    "noTasks": "No tasks available",
-    "progress": "Progress",
-    "of": "of",
-    "done": "tasks completed",
-    "edit": "Edit",
-    "delete": "Delete"
-  },
-  "category": {
-    "general": "🟡 General",
-    "personal": "🟢 Personal",
-    "work": "🔵 Work",
-    "learning": "🟣 Learning"
+    "progress": {
+      "completedOfTotal": "{completed} of {total} tasks completed",
+      "percent": "{percent}% progress"
+    }
   },
   "form": {
     "required": "This field is required",
-    "minText": "Please enter at least 2 characters"
+    "minText": "Please enter at least 2 characters",
+    "invalidCategory": "Please select a valid category",
+    "submit": "Submit"
   },
-  "theme": {
-    "dark": "Dark Mode",
-    "light": "Light Mode"
+  "category": {
+    "عمومی": "🟡 General",
+    "کار": "🔵 Work",
+    "شخصی": "🟢 Personal",
+    "یادگیری": "🟣 Learning"
   },
-  "locale": {
-    "switch": "Change Language",
+  "common": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "changeLang": "Change Language",
     "fa": "Farsi",
     "en": "English"
-  },
-  "calendar": {
-    "placeholder": "Date"
   }
 }
