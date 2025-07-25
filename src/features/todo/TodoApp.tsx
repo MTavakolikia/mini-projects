@@ -94,14 +94,14 @@ export default function TodoApp() {
 
     return (
         <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-2xl">
-            <h1 className="text-2xl font-bold mb-4 text-center">📝 لیست کارها</h1>
+            <h1 className="text-2xl font-bold mb-4 text-center">📝 {t("todo.title")}</h1>
 
             <AddTaskForm onAdd={handleAddTask} />
 
             <div className="flex  md:flex-row items-center justify-between gap-2 mb-4">
                 <input
                     type="text"
-                    placeholder="جستجوی تسک..."
+                    placeholder={t("todo.search")}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded shadow-sm text-sm"
@@ -111,17 +111,16 @@ export default function TodoApp() {
                     onChange={(e) => setCategoryFilter(e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded text-sm"
                 >
-                    <option value="all">📂 همه دسته‌ها</option>
-                    <option value="عمومی">🟡 عمومی</option>
-                    <option value="کار">🔵 کار</option>
-                    <option value="شخصی">🟢 شخصی</option>
-                    <option value="یادگیری">🟣 یادگیری</option>
+                    <option value="all">{t("todo.allCategories")}</option>
+                    <option value="public">{t("category.public")}</option>
+                    <option value="work">{t("category.work")}</option>
+                    <option value="learning">{t("category.learning")}</option>
                 </select>
                 <TaskFilter filter={filter} onChange={setFilter} />
             </div>
 
             {total === 0 ? (
-                <p className="text-sm text-gray-500 italic">هیچ تسکی وجود ندارد</p>
+                <p className="text-sm text-gray-500 italic">{t("todo.noTasks")}</p>
             ) : (
                 <TaskList
                     tasks={getFilteredTasks()}
@@ -135,7 +134,6 @@ export default function TodoApp() {
                     onCancelEdit={handleCancelEdit}
                 />
             )}
-            <h1>{t('home.title')}</h1>
             <TaskProgress completed={completed} total={total} />
         </div>
     );

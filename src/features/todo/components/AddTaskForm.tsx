@@ -4,44 +4,38 @@ import { Button, HStack } from "@chakra-ui/react";
 import { FormInput } from "@/components/form/FormInput";
 import { FormSelect } from "@/components/form/FormSelect";
 import { FormDatePicker } from "@/components/form/FormDatePicker";
-import z from "zod/v3";
-
-const formSchema = z.object({
-    TextField: z.string().min(1, { message: "عنوان کار الزامی است" }),
-    Category: z.enum(["عمومی", "کار", "شخصی", "یادگیری"], {
-        errorMap: () => ({
-            message: "لطفا یک دسته‌بندی معتبر انتخاب کنید",
-        }),
-    }),
-    DueDate: z.string().optional(),
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
+import { buildTodoSchema, type TodoFormSchema } from "../validation/addTodoSchema";
 
 interface Props {
     onAdd: (text: string, category: string, dueDate: string) => void;
 }
 
-const categoryOptions = [
-    { label: "🟡 عمومی", value: "عمومی" },
-    { label: "🔵 کار", value: "کار" },
-    { label: "🟢 شخصی", value: "شخصی" },
-    { label: "🟣 یادگیری", value: "یادگیری" },
-];
-
 export const AddTaskForm = ({ onAdd }: Props) => {
+    const { t } = useTranslation();
 
+    const formSchema = useMemo(() => buildTodoSchema(t), [t]);
+    const categoryOptions = useMemo(
+        () => [
+            { label: t("category.public"), value: "public" },
+            { label: t("category.work"), value: "work" },
+            { label: t("category.personal"), value: "personal" },
+            { label: t("category.learning"), value: "learning" },
+        ],
+        [t]
+    );
 
-    const { control, handleSubmit, reset } = useForm<FormData>({
+    const { control, handleSubmit, reset } = useForm<TodoFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             TextField: "",
-            Category: "عمومی",
+            Category: "public",
             DueDate: "",
         },
     });
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data: TodoFormSchema) => {
         const dueDate = data.DueDate ?? "";
         onAdd(data.TextField, data.Category, dueDate);
         reset();
@@ -53,23 +47,22 @@ export const AddTaskForm = ({ onAdd }: Props) => {
                 <FormInput
                     name="TextField"
                     control={control}
-                    label="عنوان کار"
-                    placeholder="کار جدید..."
+                    label={t("todo.taskTitle")}
+                    placeholder={t("todo.taskPlaceholder")}
                 />
 
                 <FormSelect
                     name="Category"
                     control={control}
-                    label="دسته‌بندی"
-                    placeholder="دسته‌بندی را انتخاب کنید"
+                    label={t("todo.category")}
                     options={categoryOptions}
                 />
 
                 <FormDatePicker
                     name="DueDate"
                     control={control}
-                    label="تاریخ سررسید"
-                    placeholder="تاریخ سررسید"
+                    label={t("todo.dueDate")}
+                    placeholder={t("todo.dueDate")}
                 />
 
                 <Button
@@ -81,11 +74,9 @@ export const AddTaskForm = ({ onAdd }: Props) => {
                     rounded="xl"
                     _hover={{ bg: "blue.600" }}
                 >
-                    افزودن
+                    {t("todo.addTask")}
                 </Button>
             </HStack>
-
-
         </form>
     );
 };

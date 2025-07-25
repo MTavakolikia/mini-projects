@@ -19,8 +19,8 @@
     "incomplete": "Incomplete",
     "all": "All",
     "progress": {
-      "completedOfTotal": "{completed} of {total} tasks completed",
-      "percent": "{percent}% progress"
+      "completedOfTotal": "{{completed}} of {{total}} tasks completed",
+      "percent": "{{percent}}% progress"
     }
   },
   "form": {
@@ -30,10 +30,10 @@
     "submit": "Submit"
   },
   "category": {
-    "عمومی": "🟡 General",
-    "کار": "🔵 Work",
-    "شخصی": "🟢 Personal",
-    "یادگیری": "🟣 Learning"
+    "public": "🟡 General",
+    "work": "🔵 Work",
+    "personal": "🟢 Personal",
+    "learning": "🟣 Learning"
   },
   "common": {
     "edit": "Edit",
