@@ -1,5 +1,3 @@
-"use client"
-
 import { ClientOnly, IconButton, Skeleton } from "@chakra-ui/react"
 import { useColorMode } from "@/components/ui/color-mode"
 import { LuMoon, LuSun } from "react-icons/lu"
@@ -15,3 +13,4 @@ const ThemeToggler = () => {
     )
 }
 export default ThemeToggler;
+

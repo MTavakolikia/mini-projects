@@ -72,6 +72,7 @@ export const AddTaskForm = ({ onAdd }: Props) => {
                     px={4}
                     py={2}
                     rounded="xl"
+                    alignSelf={"end"}
                     _hover={{ bg: "blue.600" }}
                 >
                     {t("todo.addTask")}

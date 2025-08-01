@@ -1,3 +1,4 @@
+import { Box, Progress, Text } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -10,17 +11,19 @@ export const TaskProgress = ({ completed, total }: Props) => {
     const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
     return (
-        <div className="mt-3 py-2">
-            <p className="text-sm text-gray-600">
+        <Box mt={4}>
+            <Text >
                 ✅ {t("todo.progress.completedOfTotal", { completed, total })}
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                <div className="bg-green-500 h-3 transition-all duration-300" style={{ width: `${percent}%` }} />
-            </div>
-            <p className="text-xs text-right text-gray-500">
+            </Text>
+            <Progress.Root maxW="240px" striped animated value={percent} variant={"outline"} colorPalette={"cyan"}>
+                <Progress.Track>
+                    <Progress.Range />
+                </Progress.Track>
+            </Progress.Root>
+            <Text fontSize={"sm"}>
                 {t("todo.progress.percent", { percent })}
-            </p>
+            </Text>
 
-        </div>
+        </Box>
     );
 };

@@ -1,15 +1,15 @@
 import Header from "@/components/Header";
+import { Box, HStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
 
 export default function AppLayout() {
     return (
-        <div className="min-h-screen bg-gray-100">
+        <Box as={"section"} h={"dvh"} bg={"gray.100"}>
             <Header />
-
-            <main className="p-4 flex justify-center items-center">
+            <HStack as="main" p={4} >
                 <Outlet />
-            </main>
-        </div>
+            </HStack>
+        </Box>
     );
 }

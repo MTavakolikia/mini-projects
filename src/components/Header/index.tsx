@@ -1,4 +1,5 @@
 
+import { Heading, HStack, Image } from "@chakra-ui/react"
 import LangToggler from "./LangToggler"
 import { Navigation } from "./Navbar"
 import ThemeToggler from "./ThemeToggler"
@@ -8,19 +9,17 @@ import Logo from "/logo.webp"
 const Header = () => {
 
     return (
-        <header className="bg-white shadow p-4 flex justify-between items-center">
-            <div className="flex items-center gap-2 justify-center">
-                <img src={Logo} alt="Mini app logo" width={40} />
-                <h1 className="text-xl font-bold text-cyan-600">Mini Apps</h1>
-            </div>
-
+        <HStack as="header" justify={"space-between"} bg={"white"} p={5}>
+            <HStack >
+                <Image src={Logo} alt="Mini app logo" width={"40px"} height={"40px"} />
+                <Heading fontWeight={"bold"} size={"2xl"} color={"cyan.500"}>Mini Apps</Heading>
+            </HStack>
             <Navigation />
-            <div className="flex gap-2">
+            <HStack >
                 <ThemeToggler />
                 <LangToggler />
-            </div>
-
-        </header>
+            </HStack>
+        </HStack>
     )
 }
 

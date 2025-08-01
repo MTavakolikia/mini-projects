@@ -1,3 +1,4 @@
+import { Stack } from "@chakra-ui/react";
 import type { Task } from "../model/types";
 import { TaskItem } from "./TaskItem";
 
@@ -15,10 +16,10 @@ interface Props {
 
 export const TaskList = (props: Props) => {
     return (
-        <ul className="space-y-2">
+        <Stack mt={4}>
             {props.tasks.map((task) => (
                 <TaskItem key={task.id} task={task} {...props} />
             ))}
-        </ul>
+        </Stack>
     );
 };

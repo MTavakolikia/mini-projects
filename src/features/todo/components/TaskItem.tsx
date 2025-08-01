@@ -1,4 +1,4 @@
-import { Checkbox, IconButton } from "@chakra-ui/react";
+import { Badge, Checkbox, HStack, IconButton, Input, Span } from "@chakra-ui/react";
 import type { Task } from "../model/types";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -28,8 +28,8 @@ export const TaskItem = ({
     onCancelEdit,
 }: Props) => {
     return (
-        <li className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded-xl">
-            <div className="flex items-center gap-2">
+        <HStack justifyContent={"space-between"} my={1} p={2} rounded={"md"} shadow={"sm"}>
+            <HStack>
                 <Checkbox.Root
                     checked={task.completed}
                     onChange={() => onToggle(task.id)}
@@ -39,42 +39,37 @@ export const TaskItem = ({
                     <Checkbox.Control />
                 </Checkbox.Root>
                 {editingId === task.id ? (
-                    <input
-                        value={editingText}
+                    <Input value={editingText}
                         onChange={(e) => setEditingText(e.target.value)}
                         onBlur={() => onEditSave(task.id, editingText)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") onEditSave(task.id, editingText);
                             if (e.key === "Escape") onCancelEdit();
                         }}
-                        autoFocus
-                        className="px-2 py-1 rounded border border-gray-300 text-sm"
-                    />
+                        autoFocus size="sm" />
                 ) : (
-                    <div className="flex gap-2 items-center">
-                        <span
-                            className={`${task.completed ? "line-through text-gray-400" : ""} cursor-pointer`}
+                    <HStack>
+                        <Span
                             onClick={() => onEditStart(task)}
+                            textDecoration={task.completed ? "line-through" : ""}
+                            color={task.completed ? "gray.200" : "gray.900"}
+                            cursor={"pointer"}
                         >
                             {task.text}
-                        </span>
-
-
+                        </Span>
                         {task.category && (
-                            <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">
-                                {task.category}
-                            </span>
+                            <Badge color="gray.400" rounded={"lg"}> {task.category}</Badge>
+
                         )}
                         {task?.dueDate && (
-                            <span className="text-xs text-gray-600">
+                            <Span fontSize={"sm"} color="gray.600">
                                 سررسید: {task.dueDate}
-                            </span>
+                            </Span>
                         )}
-                    </div>
-
+                    </HStack>
                 )}
-            </div>
-            <div className="flex gap-2">
+            </HStack>
+            <HStack >
                 <Tooltip content="ویرایش">
                     <IconButton
                         aria-label="Edit Task"
@@ -98,12 +93,11 @@ export const TaskItem = ({
                         color={"red.500"}
                         _hover={{ color: "red.600" }}
                         rounded="full"
-
                     >
                         <FaRegTrashAlt />
                     </IconButton>
                 </Tooltip>
-            </div>
-        </li>
+            </HStack>
+        </HStack>
     );
 };

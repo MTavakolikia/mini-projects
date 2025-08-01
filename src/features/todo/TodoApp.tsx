@@ -5,6 +5,7 @@ import { TaskList } from "./components/TaskList";
 import { TaskProgress } from "./components/TaskProgress";
 import type { Filter, Task } from "./model/types";
 import { useTranslation } from "react-i18next";
+import { Badge, Container, Heading, HStack, Input, NativeSelect } from "@chakra-ui/react";
 
 export default function TodoApp() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -93,48 +94,45 @@ export default function TodoApp() {
     const completed = tasks.filter((t) => t.completed).length;
 
     return (
-        <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-2xl">
-            <h1 className="text-2xl font-bold mb-4 text-center">📝 {t("todo.title")}</h1>
-
+        <Container as="section" shadow={"md"} rounded={"md"} bg={"white"} _dark={{ bg: "black" }} p={"8"}>
+            <Heading textAlign={"center"} size="3xl"> 📝 {t("todo.title")}</Heading>
             <AddTaskForm onAdd={handleAddTask} />
-
-            <div className="flex  md:flex-row items-center justify-between gap-2 mb-4">
-                <input
-                    type="text"
-                    placeholder={t("todo.search")}
+            <HStack>
+                <Input placeholder={t("todo.search")}
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded shadow-sm text-sm"
-                />
-                <select
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded text-sm"
-                >
-                    <option value="all">{t("todo.allCategories")}</option>
-                    <option value="public">{t("category.public")}</option>
-                    <option value="work">{t("category.work")}</option>
-                    <option value="learning">{t("category.learning")}</option>
-                </select>
+                    onChange={(e) => setSearchQuery(e.target.value)} size="sm" />
+                <NativeSelect.Root size={"md"}>
+                    <NativeSelect.Field value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                    >
+                        <option value="all">{t("todo.allCategories")}</option>
+                        <option value="public">{t("category.public")}</option>
+                        <option value="work">{t("category.work")}</option>
+                        <option value="learning">{t("category.learning")}</option>
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                </NativeSelect.Root>
                 <TaskFilter filter={filter} onChange={setFilter} />
-            </div>
+            </HStack>
 
-            {total === 0 ? (
-                <p className="text-sm text-gray-500 italic">{t("todo.noTasks")}</p>
-            ) : (
-                <TaskList
-                    tasks={getFilteredTasks()}
-                    onToggle={handleToggleComplete}
-                    onDelete={handleDeleteTask}
-                    onEditStart={handleStartEdit}
-                    onEditSave={handleEditSave}
-                    editingId={editingId}
-                    editingText={editingText}
-                    setEditingText={setEditingText}
-                    onCancelEdit={handleCancelEdit}
-                />
-            )}
+            {
+                total === 0 ? (
+                    <Badge colorPalette="purple">{t("todo.noTasks")}</Badge>
+                ) : (
+                    <TaskList
+                        tasks={getFilteredTasks()}
+                        onToggle={handleToggleComplete}
+                        onDelete={handleDeleteTask}
+                        onEditStart={handleStartEdit}
+                        onEditSave={handleEditSave}
+                        editingId={editingId}
+                        editingText={editingText}
+                        setEditingText={setEditingText}
+                        onCancelEdit={handleCancelEdit}
+                    />
+                )
+            }
             <TaskProgress completed={completed} total={total} />
-        </div>
+        </Container >
     );
 }
