@@ -9,7 +9,7 @@ import Logo from "/logo.webp"
 const Header = () => {
 
     return (
-        <HStack as="header" justify={"space-between"} bg={"white"} p={5}>
+        <HStack as="header" justify={"space-between"} bg={"white"} p={5} _dark={{ bg: "black" }}>
             <HStack >
                 <Image src={Logo} alt="Mini app logo" width={"40px"} height={"40px"} />
                 <Heading fontWeight={"bold"} size={"2xl"} color={"cyan.500"}>Mini Apps</Heading>

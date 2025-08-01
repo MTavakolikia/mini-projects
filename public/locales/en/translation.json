@@ -5,6 +5,7 @@
   "todo": {
     "title": "Task List",
     "addTask": "Add Task",
+    "newTask": "New Task",
     "taskTitle": "Task Title",
     "taskPlaceholder": "New task...",
     "category": "Category",
@@ -18,6 +19,7 @@
     "completed": "Completed",
     "incomplete": "Incomplete",
     "all": "All",
+    "addSuccessful": "Task Added Successfully.",
     "progress": {
       "completedOfTotal": "{{completed}} of {{total}} tasks completed",
       "percent": "{{percent}}% progress"
@@ -42,6 +44,7 @@
     "lightMode": "Light Mode",
     "changeLang": "Change Language",
     "fa": "Farsi",
-    "en": "English"
+    "en": "English",
+    "close": "Close"
   }
 }

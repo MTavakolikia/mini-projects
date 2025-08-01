@@ -5,6 +5,7 @@
   "todo": {
     "title": "لیست کارها",
     "addTask": "افزودن تسک",
+    "newTask": "تسک جدید",
     "taskTitle": "عنوان کار",
     "taskPlaceholder": "کار جدید...",
     "category": "دسته‌بندی",
@@ -18,6 +19,7 @@
     "completed": "انجام‌شده",
     "incomplete": "انجام‌نشده",
     "all": "همه",
+    "addSuccessful": "تسک با موفقیت ایجاد شد",
     "progress": {
       "completedOfTotal": "{{completed}} از {{total}} تسک انجام شده",
       "percent": "{{percent}}% پیشرفت"
@@ -42,6 +44,7 @@
     "lightMode": "حالت روشن",
     "changeLang": "تغییر زبان",
     "fa": "فارسی",
-    "en": "انگلیسی"
+    "en": "انگلیسی",
+    "close": "بستن"
   }
 }

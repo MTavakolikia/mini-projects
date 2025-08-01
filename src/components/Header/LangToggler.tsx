@@ -9,7 +9,7 @@ export default function LanguageSwitcher() {
 
     return (
         <Tooltip content={locale ? locale === 'en' ? 'فارسی' : 'English' : "English"}>
-            <IconButton onClick={toggleLocale} size={"sm"}>
+            <IconButton onClick={toggleLocale} size={"sm"} variant={"outline"}>
                 <MdGTranslate />
             </IconButton>
         </Tooltip>

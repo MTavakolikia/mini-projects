@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { AddTaskForm } from "./components/AddTaskForm";
 import { TaskFilter } from "./components/TaskFilter";
 import { TaskList } from "./components/TaskList";
 import { TaskProgress } from "./components/TaskProgress";
 import type { Filter, Task } from "./model/types";
 import { useTranslation } from "react-i18next";
 import { Badge, Container, Heading, HStack, Input, NativeSelect } from "@chakra-ui/react";
+import AddTaskDialog from "./components/AddTaskDialog";
 
 export default function TodoApp() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -95,8 +95,10 @@ export default function TodoApp() {
 
     return (
         <Container as="section" shadow={"md"} rounded={"md"} bg={"white"} _dark={{ bg: "black" }} p={"8"}>
-            <Heading textAlign={"center"} size="3xl"> 📝 {t("todo.title")}</Heading>
-            <AddTaskForm onAdd={handleAddTask} />
+            <HStack justify={"space-between"} mb={5}>
+                <Heading textAlign={"center"} size="2xl"> 📝 {t("todo.title")}</Heading>
+                <AddTaskDialog onAdd={handleAddTask} />
+            </HStack>
             <HStack>
                 <Input placeholder={t("todo.search")}
                     value={searchQuery}
